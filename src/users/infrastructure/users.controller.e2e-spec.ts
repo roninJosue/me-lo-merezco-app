@@ -8,8 +8,8 @@ import { User } from '../domain/user.entity';
 
 // Mocks para los casos de uso
 const mockCreateUserUseCase = {
-  execute: jest.fn((name: string, email: string) =>
-    Promise.resolve(new User(1, name, email)),
+  execute: jest.fn((userDto) =>
+    Promise.resolve(new User(1, userDto.name, userDto.email)),
   ),
 };
 const mockFindUserUseCase = {
@@ -52,10 +52,7 @@ describe('UsersController', () => {
       name: userData.name,
       email: userData.email,
     });
-    expect(mockCreateUserUseCase.execute).toHaveBeenCalledWith(
-      userData.name,
-      userData.email,
-    );
+    expect(mockCreateUserUseCase.execute).toHaveBeenCalledWith(userData);
   });
 
   it('/users/:id (GET) debe devolver un usuario existente', async () => {

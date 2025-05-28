@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import {Body, Controller, Param, ParseIntPipe, Post} from '@nestjs/common';
 import { CreateProductUseCase } from '../application/create-product.use-case';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { AddProductPriceDto } from '../dto/add-product-price.dto';
@@ -23,7 +23,7 @@ export class ProductsController {
 
   @Post(':id/prices')
   async addProductPrice(
-    @Param('id') productId: number,
+    @Param('id', ParseIntPipe) productId: number,
     @Body() dto: AddProductPriceDto,
   ) {
     await this.addProductPriceUseCase.execute({
