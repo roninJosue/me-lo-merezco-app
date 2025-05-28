@@ -44,7 +44,7 @@ export class CategoryRepositoryAdapter implements CategoryRepositoryPort {
       },
     );
   }
-  delete(id: number): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(id: number): Promise<void> {
+    await this.categoryRepository.delete(id);
   }
 }

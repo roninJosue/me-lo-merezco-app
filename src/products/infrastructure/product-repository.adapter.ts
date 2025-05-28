@@ -45,6 +45,27 @@ export class ProductRepositoryAdapter implements ProductRepositoryPort {
     );
   }
 
+  async findByCategoryId(categoryId: number): Promise<Product[]> {
+    const products = await this.productRepository.find({
+      where: {
+        category: { id: categoryId },
+      },
+    });
+    return products.map(
+      (p) =>
+        new Product(
+          p.id,
+          p.code,
+          p.name,
+          p.description,
+          p.category,
+          p.hasExpiration,
+          p.image,
+          p.prices,
+        ),
+    );
+  }
+
   async save(product: Product): Promise<Product> {
     const productOrm = this.productRepository.create(product);
     const saved = await this.productRepository.save(productOrm);

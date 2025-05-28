@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   ProductOrm,
@@ -14,7 +14,7 @@ import { AddProductPriceUseCase } from './application/add-product-price.use-case
 @Module({
   imports: [
     TypeOrmModule.forFeature([ProductOrm, ProductPriceOrm]),
-    CategoriesModule,
+    forwardRef(() => CategoriesModule),
   ],
   controllers: [ProductsController],
   providers: [
@@ -26,6 +26,6 @@ import { AddProductPriceUseCase } from './application/add-product-price.use-case
     },
     ProductRepositoryAdapter,
   ],
-  exports: [CreateProductUseCase, AddProductPriceUseCase],
+  exports: [PRODUCT_REPOSITORY, CreateProductUseCase, AddProductPriceUseCase],
 })
 export class ProductsModule {}

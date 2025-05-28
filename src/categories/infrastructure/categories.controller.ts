@@ -1,6 +1,7 @@
-import { Body, Controller, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post, Put } from '@nestjs/common';
 import { CreateCategoryUseCase } from '../application/create-category.use-case';
 import { UpdateCategoryUseCase } from '../application/update-category.use-case';
+import { DeleteCategoryUseCase } from '../application/delete-category.use-case';
 import { CreateCategoryDto } from '../dto/create-category.dto';
 import { UpdateCategoryRequestDto } from '../dto/update-category-request.dto';
 
@@ -9,6 +10,7 @@ export class CategoriesController {
   constructor(
     private readonly createCategoryUseCase: CreateCategoryUseCase,
     private readonly updateCategoryUseCase: UpdateCategoryUseCase,
+    private readonly deleteCategoryUseCase: DeleteCategoryUseCase,
   ) {}
 
   @Post()
@@ -30,6 +32,15 @@ export class CategoriesController {
       id,
       ...body,
     });
+
+    return {
+      success: true,
+    };
+  }
+
+  @Delete(':id')
+  async deleteCategory(@Param('id') id: number) {
+    await this.deleteCategoryUseCase.execute(id);
 
     return {
       success: true,
