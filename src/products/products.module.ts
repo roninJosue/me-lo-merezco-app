@@ -10,6 +10,7 @@ import { PRODUCT_REPOSITORY } from './domain/product-repository.port';
 import { ProductRepositoryAdapter } from './infrastructure/product-repository.adapter';
 import { CategoriesModule } from '../categories/categories.module';
 import { AddProductPriceUseCase } from './application/add-product-price.use-case';
+import { UpdateProductUseCase } from './application/update-product.use-case';
 
 @Module({
   imports: [
@@ -20,12 +21,18 @@ import { AddProductPriceUseCase } from './application/add-product-price.use-case
   providers: [
     CreateProductUseCase,
     AddProductPriceUseCase,
+    UpdateProductUseCase,
     {
       provide: PRODUCT_REPOSITORY,
       useClass: ProductRepositoryAdapter,
     },
     ProductRepositoryAdapter,
   ],
-  exports: [PRODUCT_REPOSITORY, CreateProductUseCase, AddProductPriceUseCase],
+  exports: [
+    PRODUCT_REPOSITORY,
+    CreateProductUseCase,
+    AddProductPriceUseCase,
+    UpdateProductUseCase,
+  ],
 })
 export class ProductsModule {}

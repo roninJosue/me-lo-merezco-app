@@ -23,6 +23,7 @@ export class AddProductPriceUseCase {
     }
 
     const newPrice = new ProductPrice(
+      0,
       request.price.priceType,
       request.price.price,
       request.price.minimumQuantity,

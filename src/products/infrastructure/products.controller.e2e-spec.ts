@@ -4,6 +4,7 @@ import * as request from 'supertest';
 import { ProductsController } from './products.controller';
 import { CreateProductUseCase } from '../application/create-product.use-case';
 import { AddProductPriceUseCase } from '../application/add-product-price.use-case';
+import { UpdateProductUseCase } from '../application/update-product.use-case';
 
 // Mocks para los casos de uso
 const mockCreateProductUseCase = {
@@ -12,6 +13,10 @@ const mockCreateProductUseCase = {
 
 const mockAddProductPriceUseCase = {
   execute: jest.fn((request) => Promise.resolve()),
+};
+
+const mockUpdateProductUseCase = {
+  execute: jest.fn((id, productDto) => Promise.resolve()),
 };
 
 describe('ProductsController', () => {
@@ -25,6 +30,10 @@ describe('ProductsController', () => {
         {
           provide: AddProductPriceUseCase,
           useValue: mockAddProductPriceUseCase,
+        },
+        {
+          provide: UpdateProductUseCase,
+          useValue: mockUpdateProductUseCase,
         },
       ],
     }).compile();
@@ -89,5 +98,26 @@ describe('ProductsController', () => {
       productId: 1,
       price: priceData,
     });
+  });
+
+  it('/products/:id (PATCH) should update a product', async () => {
+    const updateData = {
+      name: 'Updated Product Name',
+      description: 'Updated Description',
+      hasExpiration: true,
+    };
+
+    const res = await request(app.getHttpServer())
+      .patch('/products/1')
+      .send(updateData)
+      .expect(200);
+
+    expect(res.body).toMatchObject({
+      success: true,
+    });
+    expect(mockUpdateProductUseCase.execute).toHaveBeenCalledWith(
+      1,
+      updateData,
+    );
   });
 });

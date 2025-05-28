@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductRepositoryPort } from '../domain/product-repository.port';
 import { ProductOrm } from './product-orm.entity';
-import { Product } from '../domain/product.entity';
+import { Product, ProductPrice } from '../domain/product.entity';
 
 @Injectable()
 export class ProductRepositoryAdapter implements ProductRepositoryPort {
@@ -23,7 +23,10 @@ export class ProductRepositoryAdapter implements ProductRepositoryPort {
           product.category,
           product.hasExpiration,
           product.image,
-          product.prices,
+          product.prices.map(
+            (p) =>
+              new ProductPrice(p.id, p.priceType, p.price, p.minimumQuantity),
+          ),
         )
       : null;
   }
@@ -40,7 +43,10 @@ export class ProductRepositoryAdapter implements ProductRepositoryPort {
           p.category,
           p.hasExpiration,
           p.image,
-          p.prices,
+          p.prices.map(
+            (p) =>
+              new ProductPrice(p.id, p.priceType, p.price, p.minimumQuantity),
+          ),
         ),
     );
   }
@@ -61,7 +67,10 @@ export class ProductRepositoryAdapter implements ProductRepositoryPort {
           p.category,
           p.hasExpiration,
           p.image,
-          p.prices,
+          p.prices.map(
+            (p) =>
+              new ProductPrice(p.id, p.priceType, p.price, p.minimumQuantity),
+          ),
         ),
     );
   }
@@ -77,7 +86,9 @@ export class ProductRepositoryAdapter implements ProductRepositoryPort {
       saved.category,
       saved.hasExpiration,
       saved.image,
-      saved.prices,
+      saved.prices.map(
+        (p) => new ProductPrice(p.id, p.priceType, p.price, p.minimumQuantity),
+      ),
     );
   }
 

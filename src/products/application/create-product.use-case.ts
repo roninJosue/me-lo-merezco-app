@@ -36,7 +36,7 @@ export class CreateProductUseCase {
         productDto.hasExpiration,
         productDto.image ?? '',
         (productDto.prices ?? []).map(
-          (p) => new ProductPrice(p.priceType, p.price, p.minimumQuantity),
+          (p) => new ProductPrice(0, p.priceType, p.price, p.minimumQuantity),
         ),
       );
 

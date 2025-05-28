@@ -1,5 +1,4 @@
 import {
-  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsPositive,
@@ -7,19 +6,21 @@ import {
   Min,
 } from 'class-validator';
 
-export class AddProductPriceDto {
+export class UpdateProductPriceRequestDto {
   @IsOptional()
   @IsNumber()
   id: number;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   priceType: string;
 
+  @IsOptional()
   @IsNumber()
   @Min(1)
   minimumQuantity: number;
 
+  @IsOptional()
   @IsNumber()
   @IsPositive()
   price: number;
