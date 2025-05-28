@@ -25,6 +25,11 @@ import { ProductsModule } from '../products/products.module';
     },
     CategoryRepositoryAdapter,
   ],
-  exports: [CATEGORY_REPOSITORY, CreateCategoryUseCase, UpdateCategoryUseCase, DeleteCategoryUseCase],
+  exports: [
+    CATEGORY_REPOSITORY,
+    CreateCategoryUseCase,
+    UpdateCategoryUseCase,
+    DeleteCategoryUseCase,
+  ],
 })
 export class CategoriesModule {}

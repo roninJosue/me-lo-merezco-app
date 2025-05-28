@@ -1,4 +1,9 @@
-import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import {
   CATEGORY_REPOSITORY,
   CategoryRepositoryPort,
@@ -24,7 +29,8 @@ export class DeleteCategoryUseCase {
       throw new NotFoundException(`Category with id ${id} not found`);
     }
 
-    const productsWithCategory = await this.productRepository.findByCategoryId(id);
+    const productsWithCategory =
+      await this.productRepository.findByCategoryId(id);
 
     if (productsWithCategory.length > 0) {
       throw new ConflictException(

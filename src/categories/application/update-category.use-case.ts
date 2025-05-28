@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import {
   CATEGORY_REPOSITORY,
   CategoryRepositoryPort,
@@ -17,7 +17,7 @@ export class UpdateCategoryUseCase {
     const existingCategory = await this.categoryRepository.findById(request.id);
 
     if (!existingCategory) {
-      throw new Error(`Category with id ${request.id} not found`);
+      throw new NotFoundException(`Category with id ${request.id} not found`);
     }
 
     const updatedCategory = new Category(

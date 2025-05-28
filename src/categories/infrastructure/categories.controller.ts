@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CreateCategoryUseCase } from '../application/create-category.use-case';
 import { UpdateCategoryUseCase } from '../application/update-category.use-case';
 import { DeleteCategoryUseCase } from '../application/delete-category.use-case';
@@ -25,7 +33,7 @@ export class CategoriesController {
 
   @Put(':id')
   async updateCategory(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() body: UpdateCategoryRequestDto,
   ) {
     await this.updateCategoryUseCase.execute({
@@ -39,7 +47,7 @@ export class CategoriesController {
   }
 
   @Delete(':id')
-  async deleteCategory(@Param('id') id: number) {
+  async deleteCategory(@Param('id', ParseIntPipe) id: number) {
     await this.deleteCategoryUseCase.execute(id);
 
     return {

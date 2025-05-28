@@ -41,7 +41,7 @@ describe('ProductsController', () => {
     jest.clearAllMocks();
   });
 
-  it('/products (POST) debe crear un producto', async () => {
+  it('/products (POST) should create a product', async () => {
     const productData = {
       code: 'PROD001',
       name: 'Test Product',
@@ -70,7 +70,7 @@ describe('ProductsController', () => {
     expect(mockCreateProductUseCase.execute).toHaveBeenCalledWith(productData);
   });
 
-  it('/products/:id/prices (POST) debe añadir un precio a un producto', async () => {
+  it('/products/:id/prices (POST) should add a price to a product', async () => {
     const priceData = {
       priceType: 'wholesale',
       minimumQuantity: 10,
