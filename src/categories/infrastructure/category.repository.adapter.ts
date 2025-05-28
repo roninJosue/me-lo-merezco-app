@@ -32,15 +32,17 @@ export class CategoryRepositoryAdapter implements CategoryRepositoryPort {
     const categoryOrm = this.categoryRepository.create(category);
     const saved = await this.categoryRepository.save(categoryOrm);
 
-    return new Category(
-      saved.id,
-      saved.name,
-      saved.description,
-      saved.color,
-    )
+    return new Category(saved.id, saved.name, saved.description, saved.color);
   }
-  update(category: Category): Promise<void> {
-    throw new Error('Method not implemented.');
+  async update(category: Category): Promise<void> {
+    await this.categoryRepository.update(
+      { id: category.id },
+      {
+        name: category.name,
+        description: category.description,
+        color: category.color,
+      },
+    );
   }
   delete(id: number): Promise<void> {
     throw new Error('Method not implemented.');
