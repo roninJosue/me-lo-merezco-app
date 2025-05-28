@@ -40,7 +40,7 @@ describe('UsersController', () => {
     await app.close();
   });
 
-  it('/users (POST) debe crear un usuario', async () => {
+  it('/users (POST) should create a user', async () => {
     const userData = { name: 'Test', email: 'test@email.com' };
     const res = await request(app.getHttpServer())
       .post('/users')
@@ -55,7 +55,7 @@ describe('UsersController', () => {
     expect(mockCreateUserUseCase.execute).toHaveBeenCalledWith(userData);
   });
 
-  it('/users/:id (GET) debe devolver un usuario existente', async () => {
+  it('/users/:id (GET) should return an existing use', async () => {
     const res = await request(app.getHttpServer()).get('/users/1').expect(200);
     expect(res.body).toMatchObject({
       id: 1,
@@ -65,7 +65,7 @@ describe('UsersController', () => {
     expect(mockFindUserUseCase.execute).toHaveBeenCalledWith(1);
   });
 
-  it('/users/:id (GET) debe lanzar 404 si el usuario no existe', async () => {
+  it('/users/:id (GET) should return a 404 if the user does not exist', async () => {
     await request(app.getHttpServer()).get('/users/999').expect(404);
     expect(mockFindUserUseCase.execute).toHaveBeenCalledWith(999);
   });
