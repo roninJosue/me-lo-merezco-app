@@ -1,3 +1,5 @@
+import { Category } from '../../categories/domain/category.entity';
+
 export class ProductPrice {
   constructor(
     public readonly priceType: string,
@@ -12,7 +14,7 @@ export class Product {
     public code: string,
     public name: string,
     public description: string,
-    public categoryId: number,
+    public category: Category,
     public hasExpiration: boolean,
     public image: string,
     public prices: ProductPrice[],

@@ -6,6 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { CategoryOrm } from '../../categories/infrastructure/category-orm.entity';
 
 @Entity('products')
 export class ProductOrm {
@@ -21,8 +22,9 @@ export class ProductOrm {
   @Column()
   description: string;
 
-  @Column({ name: 'category_id' })
-  categoryId: number; // TODO Has to be related to Category
+  @ManyToOne(() => CategoryOrm, (category) => category.products)
+  @JoinColumn({ name: 'category_id' })
+  category: CategoryOrm;
 
   @Column({ name: 'has_expiration' })
   hasExpiration: boolean;

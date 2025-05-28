@@ -7,9 +7,7 @@ import { AddProductPriceUseCase } from '../application/add-product-price.use-cas
 
 // Mocks para los casos de uso
 const mockCreateProductUseCase = {
-  execute: jest.fn((productDto) =>
-    Promise.resolve({ id: 1 }),
-  ),
+  execute: jest.fn((productDto) => Promise.resolve({ id: 1 })),
 };
 
 const mockAddProductPriceUseCase = {
@@ -24,7 +22,10 @@ describe('ProductsController', () => {
       controllers: [ProductsController],
       providers: [
         { provide: CreateProductUseCase, useValue: mockCreateProductUseCase },
-        { provide: AddProductPriceUseCase, useValue: mockAddProductPriceUseCase },
+        {
+          provide: AddProductPriceUseCase,
+          useValue: mockAddProductPriceUseCase,
+        },
       ],
     }).compile();
 
@@ -52,9 +53,9 @@ describe('ProductsController', () => {
         {
           priceType: 'retail',
           minimumQuantity: 1,
-          price: 100
-        }
-      ]
+          price: 100,
+        },
+      ],
     };
 
     const res = await request(app.getHttpServer())
@@ -73,7 +74,7 @@ describe('ProductsController', () => {
     const priceData = {
       priceType: 'wholesale',
       minimumQuantity: 10,
-      price: 80
+      price: 80,
     };
 
     const res = await request(app.getHttpServer())
