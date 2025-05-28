@@ -5,6 +5,8 @@ import { CategoriesController } from './categories.controller';
 import { CreateCategoryUseCase } from '../application/create-category.use-case';
 import { UpdateCategoryUseCase } from '../application/update-category.use-case';
 import { DeleteCategoryUseCase } from '../application/delete-category.use-case';
+import { GetCategoryByIdUseCase } from '../application/get-category-by-id.use-case';
+import { GetAllCategoriesUseCase } from '../application/get-all-categories.use-case';
 import { createTestApp } from '../../../test/setup';
 
 // Mocks for use cases
@@ -20,6 +22,36 @@ const mockDeleteCategoryUseCase = {
   execute: jest.fn((id) => Promise.resolve()),
 };
 
+const mockGetCategoryByIdUseCase = {
+  execute: jest.fn((id) =>
+    Promise.resolve({
+      id: 1,
+      name: 'Test Category',
+      description: 'Test Description',
+      color: '#FF5733',
+    }),
+  ),
+};
+
+const mockGetAllCategoriesUseCase = {
+  execute: jest.fn(() =>
+    Promise.resolve([
+      {
+        id: 1,
+        name: 'Test Category 1',
+        description: 'Test Description 1',
+        color: '#FF5733',
+      },
+      {
+        id: 2,
+        name: 'Test Category 2',
+        description: 'Test Description 2',
+        color: '#33FF57',
+      },
+    ]),
+  ),
+};
+
 describe('CategoriesController (e2e)', () => {
   let app: INestApplication;
 
@@ -30,6 +62,14 @@ describe('CategoriesController (e2e)', () => {
         { provide: CreateCategoryUseCase, useValue: mockCreateCategoryUseCase },
         { provide: UpdateCategoryUseCase, useValue: mockUpdateCategoryUseCase },
         { provide: DeleteCategoryUseCase, useValue: mockDeleteCategoryUseCase },
+        {
+          provide: GetCategoryByIdUseCase,
+          useValue: mockGetCategoryByIdUseCase,
+        },
+        {
+          provide: GetAllCategoriesUseCase,
+          useValue: mockGetAllCategoriesUseCase,
+        },
       ],
     }).compile();
 
@@ -138,5 +178,46 @@ describe('CategoriesController (e2e)', () => {
     );
     expect(res.body.statusCode).toBe(400);
     expect(mockCreateCategoryUseCase.execute).not.toHaveBeenCalled();
+  });
+
+  it('/categories/:id (GET) should get a category by id', async () => {
+    const categoryId = 1;
+    const expectedCategory = {
+      id: 1,
+      name: 'Test Category',
+      description: 'Test Description',
+      color: '#FF5733',
+    };
+
+    const res = await request(app.getHttpServer())
+      .get(`/categories/${categoryId}`)
+      .expect(200);
+
+    expect(res.body).toEqual(expectedCategory);
+    expect(mockGetCategoryByIdUseCase.execute).toHaveBeenCalledWith(categoryId);
+  });
+
+  it('/categories (GET) should get all categories', async () => {
+    const expectedCategories = [
+      {
+        id: 1,
+        name: 'Test Category 1',
+        description: 'Test Description 1',
+        color: '#FF5733',
+      },
+      {
+        id: 2,
+        name: 'Test Category 2',
+        description: 'Test Description 2',
+        color: '#33FF57',
+      },
+    ];
+
+    const res = await request(app.getHttpServer())
+      .get('/categories')
+      .expect(200);
+
+    expect(res.body).toEqual(expectedCategories);
+    expect(mockGetAllCategoriesUseCase.execute).toHaveBeenCalled();
   });
 });

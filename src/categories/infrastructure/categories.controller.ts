@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   ParseIntPipe,
   Post,
@@ -10,6 +11,8 @@ import {
 import { CreateCategoryUseCase } from '../application/create-category.use-case';
 import { UpdateCategoryUseCase } from '../application/update-category.use-case';
 import { DeleteCategoryUseCase } from '../application/delete-category.use-case';
+import { GetCategoryByIdUseCase } from '../application/get-category-by-id.use-case';
+import { GetAllCategoriesUseCase } from '../application/get-all-categories.use-case';
 import { CreateCategoryDto } from '../dto/create-category.dto';
 import { UpdateCategoryRequestDto } from '../dto/update-category-request.dto';
 
@@ -19,6 +22,8 @@ export class CategoriesController {
     private readonly createCategoryUseCase: CreateCategoryUseCase,
     private readonly updateCategoryUseCase: UpdateCategoryUseCase,
     private readonly deleteCategoryUseCase: DeleteCategoryUseCase,
+    private readonly getCategoryByIdUseCase: GetCategoryByIdUseCase,
+    private readonly getAllCategoriesUseCase: GetAllCategoriesUseCase,
   ) {}
 
   @Post()
@@ -53,5 +58,15 @@ export class CategoriesController {
     return {
       success: true,
     };
+  }
+
+  @Get(':id')
+  async getCategoryById(@Param('id', ParseIntPipe) id: number) {
+    return this.getCategoryByIdUseCase.execute(id);
+  }
+
+  @Get()
+  async getAllCategories() {
+    return this.getAllCategoriesUseCase.execute();
   }
 }

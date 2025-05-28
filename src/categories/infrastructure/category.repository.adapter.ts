@@ -25,8 +25,18 @@ export class CategoryRepositoryAdapter implements CategoryRepositoryPort {
       : null;
   }
 
-  findAll(): Promise<Category[]> {
-    throw new Error('Method not implemented.');
+  async findAll(): Promise<Category[]> {
+    const categories = await this.categoryRepository.find();
+
+    return categories.map(
+      (category) =>
+        new Category(
+          category.id,
+          category.name,
+          category.description,
+          category.color,
+        ),
+    );
   }
   async save(category: Category): Promise<Category> {
     const categoryOrm = this.categoryRepository.create(category);
