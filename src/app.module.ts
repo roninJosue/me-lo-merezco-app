@@ -22,6 +22,8 @@ import { CategoriesModule } from './categories/categories.module';
         database: configService.get<string>('POSTGRES_DB', 'database'),
         autoLoadEntities: true,
         synchronize: true,
+        // logging: true,
+        // logger: "advanced-console"
       }),
     }),
     UsersModule,

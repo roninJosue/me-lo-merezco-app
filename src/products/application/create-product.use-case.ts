@@ -4,7 +4,7 @@ import {
   ProductRepositoryPort,
 } from '../domain/product-repository.port';
 import { CreateProductDto } from '../dto/create-product.dto';
-import { Product, ProductPrice } from '../domain/product.entity';
+import { Product } from '../domain/product.entity';
 import {
   CATEGORY_REPOSITORY,
   CategoryRepositoryPort,
@@ -35,9 +35,6 @@ export class CreateProductUseCase {
         category,
         productDto.hasExpiration,
         productDto.image ?? '',
-        (productDto.prices ?? []).map(
-          (p) => new ProductPrice(0, p.priceType, p.price, p.minimumQuantity),
-        ),
       );
 
       const savedProduct = await this.productRepository.save(product);

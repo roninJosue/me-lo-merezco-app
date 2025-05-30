@@ -35,6 +35,7 @@ export class ProductOrm {
   @OneToMany(() => ProductPriceOrm, (pp) => pp.product, {
     cascade: true,
     eager: true,
+    orphanedRowAction: 'delete',
   })
   prices: ProductPriceOrm[];
 }
@@ -53,7 +54,10 @@ export class ProductPriceOrm {
   @Column('decimal', { precision: 10, scale: 2 })
   price: number;
 
-  @ManyToOne(() => ProductOrm, (product) => product.prices)
+  @ManyToOne(() => ProductOrm, (product) => product.prices, {
+    onDelete: 'CASCADE',
+    orphanedRowAction: 'delete',
+  })
   @JoinColumn({ name: 'product_id' })
   product: ProductOrm;
 }

@@ -11,6 +11,8 @@ import { ProductRepositoryAdapter } from './infrastructure/product-repository.ad
 import { CategoriesModule } from '../categories/categories.module';
 import { AddProductPriceUseCase } from './application/add-product-price.use-case';
 import { UpdateProductUseCase } from './application/update-product.use-case';
+import { UpdateProductPriceUseCase } from './application/update-product-price.use-case';
+import { DeleteProductPriceUseCase } from './application/delete-product-price.use-case';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { UpdateProductUseCase } from './application/update-product.use-case';
     CreateProductUseCase,
     AddProductPriceUseCase,
     UpdateProductUseCase,
+    UpdateProductPriceUseCase,
+    DeleteProductPriceUseCase,
     {
       provide: PRODUCT_REPOSITORY,
       useClass: ProductRepositoryAdapter,
@@ -33,6 +37,8 @@ import { UpdateProductUseCase } from './application/update-product.use-case';
     CreateProductUseCase,
     AddProductPriceUseCase,
     UpdateProductUseCase,
+    UpdateProductPriceUseCase,
+    DeleteProductPriceUseCase,
   ],
 })
 export class ProductsModule {}

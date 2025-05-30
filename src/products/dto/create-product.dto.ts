@@ -4,11 +4,7 @@ import {
   IsOptional,
   IsInt,
   IsBoolean,
-  IsArray,
-  ValidateNested,
 } from 'class-validator';
-import { Type } from 'class-transformer';
-import { AddProductPriceDto } from './add-product-price.dto';
 
 export class CreateProductDto {
   @IsString()
@@ -33,9 +29,9 @@ export class CreateProductDto {
   @IsOptional()
   image?: string;
 
-  @IsArray()
+  /*  @IsArray()
   @ValidateNested({ each: true })
   @Type(() => AddProductPriceDto)
   @IsOptional()
-  prices?: AddProductPriceDto[];
+  prices?: AddProductPriceDto[];*/
 }

@@ -49,7 +49,7 @@ export class Product {
     public category: Category,
     public hasExpiration: boolean,
     public image: string,
-    public prices: ProductPrice[],
+    public prices: ProductPrice[] = [],
   ) {}
 
   addPrice(price: ProductPrice) {
@@ -89,7 +89,7 @@ export class Product {
 
   removePriceById(priceId: number) {
     const index = this.prices.findIndex((p) => p.id === priceId);
-    if (index !== 1) {
+    if (index !== -1) {
       this.prices.splice(index, 1);
     }
   }

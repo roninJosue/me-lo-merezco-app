@@ -7,10 +7,6 @@ import {
 } from 'class-validator';
 
 export class UpdateProductPriceRequestDto {
-  @IsOptional()
-  @IsNumber()
-  id: number;
-
   @IsString()
   @IsOptional()
   priceType: string;
